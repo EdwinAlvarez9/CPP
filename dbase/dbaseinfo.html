@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño de la Base de Datos del Subsistema</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Diseño de la Base de Datos del Subsistema Proveedores</h1>
+        
+        <h2>Diagrama de la base de datos</h2>
+        <img src="./Diagrama de la DB.jpg" alt="Diagrama de la base de datos" style="width: 100%;" />
+
+        <h2>Descripción del esquema</h2>
+        <p>El archivo <code>dbaseinfo.html</code> incluye un diagrama que ilustra las tablas, campos y relaciones en la base de datos. Esta representación visual es clave para comprender la estructura de los datos y cómo se conectan entre sí.</p>
+
+        <h2>Pertinencia de la arquitectura</h2>
+        <p>La arquitectura de la base de datos:</p>
+        <ul>
+            <li><strong>Facilitar el acceso a la información</strong>:  Cada tabla está configurada para permitir consultas de manera rápida y eficaz.</li>
+            <li><strong>Asegurar la integridad de los datos</strong>: Se crean relaciones adecuadas entre las tablas, lo que hace que se reduzca la redundancia y mantener la consistencia.</li>
+            <li><strong>Soportar las funcionalidades del subsistema</strong>: La estructura permite implementar las diversas funcionalidades requeridas por los usuarios, garantizando que cada acción esté respaldada en la base de datos.</li>
+        </ul>
+
+        <h2>Normalización de la base de datos</h2>
+        <p>La base de datos relacional asegura la organización y coherencia de los datos a través de varias formas normales:</p>
+        
+        <h3>1NF (Primera Forma Normal)</h3>
+        <p>Una tabla que se considera que cumple con la Primera Forma Normal, si todos sus atributos tienen valores precisos y cada columna alberga únicamente un tipo de dato. En las tablas, cada campo está diseñado para contener un solo valor. Por ejemplo, en la tabla <code>Puercos</code>, el campo <code>Vacunas</code> enumera varias vacunas, pero cada registro corresponde a un único cerdo (lechón), garantizando así que los datos sean precisos.</p>
+
+        <h3>2NF (Segunda Forma Normal)</h3>
+        <p>Cada una de las tablas debe cumplir con la Segunda Forma Normal, lo que implica que deben de estar en Primera Forma Normal y que todos los atributos que no son clave deben depender funcionalmente de la clave primaria. En la base de datos, cada tabla tiene una clave primaria única. Por ejemplo, en la tabla <code>Puercos</code>, todos los campos dependen del <code>Id</code> del cerdo (lechón), asegurando que no haya dependencias parciales en las tablas..</p>
+
+        <h3>3NF (Tercera Forma Normal)</h3>
+        <p>Cada una de las tabla se encuentran en Segunda Forma Normal si estas cumple con las condiciones de Primera Forma Normal y todos los atributos que no son clave dependen funcionalmente de la clave primaria. En la base de datos, cada tabla tiene una clave primaria única. Por ejemplo, en la tabla <code>Puercos</code>, todos los campos dependen del <code>Id</code> del cerdo (lechón), lo que garantiza que no existan dependencias parciales..</p>
+
+        <h2>Código SQL para crear las tablas</h2>
+        <pre>
+        -- Crear tabla de los Proveedores
+        CREATE TABLE Proveedores (
+            Id INT PRIMARY KEY IDENTITY(1,1),
+            Nombre NVARCHAR(100) NOT NULL,
+            Tipo NVARCHAR(50) NOT NULL, -- Puerco, Alimento, Medicina
+            Contacto NVARCHAR(100) NOT NULL
+        );
+
+        -- Crear tabla de los Puercos
+        CREATE TABLE Puercos (
+            Id INT PRIMARY KEY IDENTITY(1,1),
+            Edad INT NOT NULL,
+            Raza NVARCHAR(50) NOT NULL,
+            Peso FLOAT NOT NULL,
+            Vacunas NVARCHAR(255) NOT NULL,
+            Precio DECIMAL(10, 2) NOT NULL,
+            ProveedorId INT NOT NULL,
+            FOREIGN KEY (ProveedorId) REFERENCES Proveedores(Id)
+        );
+
+        -- Crear tabla de los Alimentos
+        CREATE TABLE Alimentos (
+            Id INT PRIMARY KEY IDENTITY(1,1),
+            Nombre NVARCHAR(100) NOT NULL,
+            Tipo NVARCHAR(50) NOT NULL, -- Alimento, Suplemento, Alimento Certificado
+            InformacionNutricional NVARCHAR(255) NOT NULL,
+            Precio DECIMAL(10, 2) NOT NULL,
+            ProveedorId INT NOT NULL,
+            FOREIGN KEY (ProveedorId) REFERENCES Proveedores(Id)
+        );
+
+        -- Crear tabla de los Medicamentos
+        CREATE TABLE Medicamentos (
+            Id INT PRIMARY KEY IDENTITY(1,1),
+            Nombre NVARCHAR(100) NOT NULL,
+            Tipo NVARCHAR(50) NOT NULL, -- Medicamento, Vacuna
+            Precio DECIMAL(10, 2) NOT NULL,
+            ProveedorId INT NOT NULL,
+            FOREIGN KEY (ProveedorId) REFERENCES Proveedores(Id)
+        );
+        </pre>
+
+        <h2>Código SQL para insertar registros</h2>
+        <pre>
+            -- Insertar registros de los Proveedores
+            INSERT INTO Proveedores (Nombre, Tipo, Contacto) VALUES
+            ('Cerditos Inc.', 'Puerco', 'CerditosInc@gmail.com'),
+            ('Purina', 'Alimento', 'Purina@gmail.com'),
+            ('FarmPork', 'Medicina', 'FarmPork@gmail.com');
+            
+            -- Insertar registros de los Puercos
+            INSERT INTO Puercos (Edad, Raza, Peso, Vacunas, Precio, ProveedorId) VALUES
+            (1, 'Yorkshire', 10.0, 'Vacuna contra la peste porcina clásica, Vacuna contra la influenza porcina', 100.00, 1),
+            (2, 'Berkshire', 12.0, 'Vacuna contra la peste porcina clásica', 105.00, 1),
+            (3, 'Duroc', 15.0, 'Vacuna contra la influenza porcina', 110.00, 1),
+            (4, 'Hampshire', 18.0, 'Vacuna contra la peste porcina clásica, Vacuna contra el circovirus porcino', 115.00, 1),
+            (5, 'Landrace', 20.0, 'Vacuna contra la peste porcina clásica', 120.00, 1),
+            (6, 'Yorkshire', 11.0, 'Vacuna contra la influenza porcina', 102.00, 1),
+            (7, 'Berkshire', 14.0, 'Vacuna contra la peste porcina clásica, Vacuna contra el circovirus porcino', 107.00, 1),
+            (8, 'Duroc', 16.0, 'Vacuna contra la influenza porcina', 112.00, 1),
+            (9, 'Hampshire', 19.0, 'Vacuna contra la peste porcina clásica', 117.00, 1),
+            (10, 'Landrace', 22.0, 'Vacuna contra la peste porcina clásica, Vacuna contra el circovirus porcino', 122.00, 1),
+            (11, 'Yorkshire', 10.5, 'Vacuna contra la peste porcina clásica', 101.00, 1),
+            (12, 'Berkshire', 13.5, 'Vacuna contra la influenza porcina', 106.00, 1),
+            (13, 'Duroc', 15.5, 'Vacuna contra la peste porcina clásica', 111.00, 1),
+            (14, 'Hampshire', 18.5, 'Vacuna contra la influenza porcina', 116.00, 1),
+            (15, 'Landrace', 21.5, 'Vacuna contra la peste porcina clásica', 121.00, 1),
+            (16, 'Yorkshire', 11.5, 'Vacuna contra la peste porcina clásica', 103.00, 1),
+            (17, 'Berkshire', 14.5, 'Vacuna contra la influenza porcina', 108.00, 1),
+            (18, 'Duroc', 16.5, 'Vacuna contra la peste porcina clásica', 113.00, 1),
+            (19, 'Hampshire', 19.5, 'Vacuna contra la influenza porcina', 118.00, 1),
+            (20, 'Landrace', 22.5, 'Vacuna contra la peste porcina clásica', 123.00, 1),
+            (21, 'Yorkshire', 11.0, 'Vacuna contra la peste porcina clásica', 104.00, 1),
+            (22, 'Berkshire', 14.0, 'Vacuna contra la influenza porcina', 109.00, 1),
+            (23, 'Duroc', 16.0, 'Vacuna contra la peste porcina clásica', 114.00, 1),
+            (24, 'Hampshire', 19.0, 'Vacuna contra la influenza porcina', 119.00, 1),
+            (25, 'Landrace', 22.0, 'Vacuna contra la peste porcina clásica', 124.00, 1),
+            (26, 'Yorkshire', 12.0, 'Vacuna contra la peste porcina clásica', 102.50, 1),
+            (27, 'Berkshire', 15.0, 'Vacuna contra la influenza porcina', 107.50, 1),
+            (28, 'Duroc', 17.0, 'Vacuna contra la peste porcina clásica', 112.50, 1),
+            (29, 'Hampshire', 20.0, 'Vacuna contra la influenza porcina', 117.50, 1),
+            (30, 'Landrace', 23.0, 'Vacuna contra la peste porcina clásica', 122.50, 1);
+            
+            -- Insertar registros de los Alimentos
+            INSERT INTO Alimentos (Nombre, Tipo, InformacionNutricional, Precio, ProveedorId) VALUES
+            ('Purina Pig Chow', 'Suplemento', 'Nutrición balanceada para cerdos en crecimiento', 50.00, 2),
+            ('Nutrena Swine Nutritional', 'Suplemento', 'Fórmula premium para el desarrollo óptimo', 52.00, 2),
+            ('Blue Seal Pig Grower', 'Suplemento', 'Alimento completo para cerdos jóvenes', 54.00, 2),
+            ('Boehringer Ingelheim Swine Feed', 'Suplemento', 'Nutrición avanzada para cerdos', 56.00, 2),
+            ('Manna Pro Show Pig', 'Suplemento', 'Alimentos para cerdos de exhibición', 58.00, 2),
+            ('Kent Feeds Swine Diet', 'Suplemento', 'Alimento para cerdos en crecimiento y engorde', 60.00, 2),
+            ('ADM Animal Nutrition', 'Suplemento', 'Fórmula balanceada para cerdos', 62.00, 2),
+            ('Hubbard Feeds Swine', 'Suplemento', 'Nutrición para cerdos de engorde', 64.00, 2),
+            ('Cargill Swine Feed', 'Suplemento', 'Alimento completo para el crecimiento saludable', 66.00, 2),
+            ('Kalmbach Feeds Swine', 'Suplemento', 'Nutrición especializada para cerdos', 68.00, 2);
+            
+            -- Insertar registros de los Medicamentos
+            INSERT INTO Medicamentos (Nombre, Tipo, Precio, ProveedorId) VALUES
+            ('Porcilis PRRS', 'Vacuna', 20.00, 3),
+            ('Ingelvac PRRS MLV', 'Vacuna', 22.00, 3),
+            ('Circumvent', 'Vacuna', 24.00, 3),
+            ('Fostera Gold', 'Vacuna', 26.00, 3),
+            ('Porcine Parvovirus Vaccine', 'Vacuna', 28.00, 3),
+            ('Ingelvac MycoFLEX', 'Vacuna', 30.00, 3),
+            ('Boehringer Ingelheim Erysipelas Vaccine', 'Vacuna', 32.00, 3),
+            ('Pulmotil AC', 'Vacuna', 34.00, 3),
+            ('Pneumovac', 'Vacuna', 36.00, 3),
+            ('Farnam Swine Vaccine', 'Vacuna', 38.00, 3);
+            
+            -------Comandos para consultar los registros-------
+            SELECT * FROM Proveedores;
+            SELECT * FROM Alimentos;
+            SELECT * FROM Medicamentos;
+        </pre>
+
+        <h2>Funcionalidad de la base de datos</h2>
+        <p>La base de datos está funcionando correctamente y cuenta con todas las tablas que aparecen en su diagrama del principio, con los campos establecidos, permitiendo agregar registros en todas las tablas sin algún problema.</p>
+    </div>
+</body>
+</html>
