@@ -39,7 +39,7 @@
         <pre>
             CREATE DATABASE GranjaProveedores
             USE GranjaProveedores
-            
+        
             -- Crear tabla Proveedores
             CREATE TABLE Proveedores (
                 Id INT PRIMARY KEY IDENTITY(1,1),
@@ -80,10 +80,9 @@
                 ProveedorId INT NOT NULL,
                 FOREIGN KEY (ProveedorId) REFERENCES Proveedores(Id)
             );
-            <pre>
+        </pre>
             
-            
-            <h2>Código SQL para crear las tablas</h2>
+            <h2>Código para crear los registros en la base de datos</h2>
             <pre>
                 ----------------REGISTROS ---------------------
             -- Insertar Proveedores
