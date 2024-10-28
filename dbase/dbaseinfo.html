@@ -80,10 +80,12 @@
                 ProveedorId INT NOT NULL,
                 FOREIGN KEY (ProveedorId) REFERENCES Proveedores(Id)
             );
+            <pre>
             
             
-            
-            ----------------REGISTROS ---------------------
+            <h2>Código SQL para crear las tablas</h2>
+            <pre>
+                ----------------REGISTROS ---------------------
             -- Insertar Proveedores
             INSERT INTO Proveedores (Nombre, Tipo, Contacto) VALUES
             ('Proveedor A', 'Puerco', 'ProveedorA@gmail.com'),
@@ -153,8 +155,8 @@
             SELECT * FROM Proveedores
             SELECT * FROM Alimentos
             SELECT * FROM Medicamentos
-        </pre>
-
+            </pre>
+            
         <h2>Funcionalidad de la base de datos</h2>
         <p>La base de datos está funcionando correctamente y cuenta con todas las tablas que aparecen en su diagrama del principio, con los campos establecidos permitiendo agregar registros en todas las tablas sin algún problema.</p>
     </div>
