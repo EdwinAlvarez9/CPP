@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Producto</title>
+</head>
+<body>
+
+    <header>
+        <h1>Formulario de Producto</h1>
+    </header>
+
+    <!-- Formulario para crear un nuevo producto -->
+    <section>
+        <h2>Agregar Nuevo Producto</h2>
+        <form method="post" action="/Productos/Create">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="Nombre" placeholder="Nombre del producto" required>
+            </div>
+            <div>
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="Descripcion" placeholder="Descripción del producto" required></textarea>
+            </div>
+            <div>
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="Precio" placeholder="Precio del producto" required>
+            </div>
+            <button type="submit">Crear Producto</button> <!-- Botón para enviar el formulario -->
+        </form>
+    </section>
+
+    <hr>
+
+    <!-- Sección para listar productos existentes, si es necesario -->
+    <section>
+        <h2>Productos Existentes</h2>
+        <div id="productos-lista">
+            <!-- Ejemplo de productos, esto debería ser dinámico -->
+            <div>
+                <h3>Puercos(Lechones)</h3>
+                <p>Nuestros lechones provienen de razas seleccionadas, garantizando un excelente crecimiento y desarrollo de 
+                cada uno de nuestros lechones, al igual que se encuentra en excelentes condiciones de salud, nacidos en un ambiente controlado y con el mejor cuidado. </p>
+                <p>Precio: $300</p>
+                <img src="./Puerquitos.jpg" alt="Lechones" width="200"> <!-- Imagen del producto -->
+                <form method="post" action="/Productos/Delete">
+                    <input type="hidden" name="id" value="1"> <!-- ID del producto -->
+                    <button type="submit">Eliminar</button> <!-- Botón para eliminar el producto -->
+                </form>
+            </div>
+
+            <div>
+                <h3>Medicamentos</h3>
+                <p>Ofrecemos alimentos de alta calidad, formulados específicamente para satisfacer las necesidades nutricionales de los lechones en crecimiento. 
+                Cada unos de Nnuestros productos son de una excelente calidad certificados por el gobierno federal, asegurando un óptimo rendimiento y bienestar de los lechones.</p>
+                <p>Precio: $80</p>
+                <img src="./Medicamentos.jpg" alt="Medicamentos" width="200"> <!-- Imagen del producto -->
+                <form method="post" action="/Productos/Delete">
+                    <input type="hidden" name="id" value="2"> <!-- ID del producto -->
+                    <button type="submit">Eliminar</button> <!-- Botón para eliminar el producto -->
+                </form>
+            </div>
+            <!-- Más productos pueden ser listados aquí -->
+        </div>
+
+        <div>
+            <h3>Alimentos</h3>
+            <p>Contamos con una línea de productos médicos diseñados para el cuidado y la salud de los lechones. 
+            Nuestras medicinas son efectivas y seguras, ayudando a prevenir enfermedades y a mantener a los lechones en su mejor estado, 
+            contribuyendo a su crecimiento y productividad.</p>
+            <p>Precio: $50</p>
+            <img src="./Alimentos.jpg" alt="Alimentos" width="200"> <!-- Imagen del producto -->
+            <form method="post" action="/Productos/Delete">
+                <input type="hidden" name="id" value="2"> <!-- ID del producto -->
+                <button type="submit">Eliminar</button> <!-- Botón para eliminar el producto -->
+            </form>
+        </div>
+        <!-- Más productos pueden ser listados aquí -->
+    </div>
+    </section>
+
+</body>
+</html>
