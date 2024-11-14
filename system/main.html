@@ -1,37 +1,145 @@
-agregarlo en mi GitHub en la parte de system:
-@model ProveedoresCRUD.Models.Proveedore
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crear Proveedor</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Crear Proveedor</h1>
-        <form asp-action="Crear_Proveedor" method="post">
-            <div class="mb-3">
-                <label asp-for="Nombre" class="form-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Proveedores Detalle</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <style>
+            /* Fondo de la página en color rosa suave */
+            body {
+                background-color: #ffe6e6;
+                color: #333;
+            }
+    
+            /* Contenedor principal con borde y fondo de color rosa */
+            .container {
+                background-color: #fff0f0; /* Fondo blanco rosado */
+                border: 3px solid #ffb3b3; /* Borde rosa */
+                border-radius: 15px;
+                padding: 2rem;
+                box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            }
+    
+            /* Navbar y encabezados en color rosa */
+            .navbar {
+                background-color: #ffb3b3;
+            }
+    
+            .navbar-brand, .navbar-nav .nav-link {
+                color: #fff;
+            }
+    
+            /* Botones en tonos de rosa */
+            .btn-success {
+                background-color: #ffb3b3;
+                border-color: #ffb3b3;
+            }
+    
+                .btn-success:hover {
+                    background-color: #ff9999;
+                    border-color: #ff9999;
+                }
+    
+            .btn-secondary {
+                background-color: #ffcccc;
+                border-color: #ffcccc;
+            }
+    
+                .btn-secondary:hover {
+                    background-color: #ffb3b3;
+                    border-color: #ffb3b3;
+                }
+    
+            /* Cabecera de la tabla */
+            .card-header {
+                background-color: #ffb3b3;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#">CPP (Centro de Producción Porcina)</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Proveedores_Detalle", "Proveedores")">Lista de Proveedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">Inicio</a>
+                    </li>
+                </ul>
             </div>
-            <div class="mb-3">
-                <label asp-for="Tipo" class="form-label"></label>
-                <input asp-for="Tipo" class="form-control" />
-                <span asp-validation-for="Tipo" class="text-danger"></span>
+        </nav>
+    
+        <div class="container mt-5">
+            <!-- Título con imágenes a los costados -->
+            <h1 class="text-center mb-4">
+                <img src="~/images/emoticon lechon.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-right: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                Lista de Proveedores
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+                <img src="~/images/emoticon puerquito.png" alt="Icono" style="width: 30px; vertical-align: middle; margin-left: 8px;" />
+    
+            </h1>
+    
+            <!-- Botón para agregar nuevo proveedor -->
+            <div class="mb-4 text-right">
+                <a href="@Url.Action("Crear_Proveedor", "Proveedores")" class="btn btn-success btn-lg">Agregar Nuevo Proveedor</a>
             </div>
-            <div class="mb-3">
-                <label asp-for="Contacto" class="form-label"></label>
-                <input asp-for="Contacto" class="form-control" />
-                <span asp-validation-for="Contacto" class="text-danger"></span>
+    
+            <!-- Tarjeta para la tabla de proveedores -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Proveedores Registrados</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Contacto</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var proveedor in Model)
+                            {
+                                <tr>
+                                    <td>@proveedor.Id</td>
+                                    <td>@proveedor.Nombre</td>
+                                    <td>@proveedor.Tipo</td>
+                                    <td>@proveedor.Contacto</td>
+                                    <td>
+                                        <a href="@Url.Action("Editar_Proveedor", "Proveedores", new { id = proveedor.Id })" class="btn btn-warning btn-sm">Editar</a>
+                                        <a href="@Url.Action("Eliminar_Proveedor", "Proveedores", new { id = proveedor.Id })" class="btn btn-danger btn-sm">Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <button type="submit" class="btn btn-success">Crear Proveedor</button>
-            <a href="@Url.Action("Proveedores_Detalle")" class="btn btn-secondary">Cancelar</a>
-        </form>
-    </div>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    
+            <!-- Botón para volver al inicio -->
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-secondary btn-lg">Volver al Inicio</a>
+            </div>
+        </div>
+    
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
